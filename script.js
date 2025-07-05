@@ -27,7 +27,7 @@ function buscarSinal() {
 
   sinais.innerHTML = `<p>Buscando sinal para ${plataforma}...</p>`;
 
-  fetch('https://willboot-backend.onrender.com/get_sinal', {
+  fetch('https://willboot-backend.onrender.com/sinal', {
     headers: {
       'Authorization': 'Basic ' + btoa('willboot:willboot2025')
     }
