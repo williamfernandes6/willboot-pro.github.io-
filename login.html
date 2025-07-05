@@ -1,39 +1,23 @@
-<!DOCTYPE html>
-<html lang="pt">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Login VIP - WillBoot</title>
-  <link href="style.css" rel="stylesheet" />
-</head>
-<body>
-  <header>
-    <h1>Área VIP - WillBoot</h1>
-  </header>
+<form onsubmit="return loginVIP(event)">
+  <label for="usuario">Usuário:</label><br/>
+  <input type="text" id="usuario" required /><br/><br/>
+  <label for="senha">Senha:</label><br/>
+  <input type="password" id="senha" required /><br/><br/>
+  <button type="submit">Entrar</button>
+</form>
+<p id="msg"></p>
 
-  <main>
-    <form onsubmit="return loginVIP(event)">
-      <label for="usuario">Usuário:</label><br/>
-      <input type="text" id="usuario" required /><br/><br/>
-      <label for="senha">Senha:</label><br/>
-      <input type="password" id="senha" required /><br/><br/>
-      <button type="submit">Entrar</button>
-    </form>
-    <p id="msg"></p>
-  </main>
+<script>
+  function loginVIP(event) {
+    event.preventDefault();
+    const usuario = document.getElementById("usuario").value;
+    const senha = document.getElementById("senha").value;
 
-  <script>
-    function loginVIP(event) {
-      event.preventDefault();
-      const usuario = document.getElementById("usuario").value;
-      const senha = document.getElementById("senha").value;
-
-      if (usuario === "vip" && senha === "1234") {
-        window.location.href = "vip.html";
-      } else {
-        document.getElementById("msg").textContent = "Acesso negado!";
-      }
+    if (usuario === "vip" && senha === "1234") {
+      localStorage.setItem("vip", "sim");
+      window.location.href = "index.html";
+    } else {
+      document.getElementById("msg").textContent = "Acesso negado!";
     }
-  </script>
-</body>
-</html>
+  }
+</script>
