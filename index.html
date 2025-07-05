@@ -2,142 +2,20 @@
 <html lang="pt">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>WillBoot - Sinais Aviator</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet" />
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #0a0a0a;
-      color: #fff;
-      margin: 0;
-      padding: 20px;
-      text-align: center;
-    }
-    header h1 {
-      color: #ff3333;
-      font-size: 32px;
-      margin-bottom: 5px;
-    }
-    header p {
-      color: #ccc;
-      margin-bottom: 30px;
-    }
-    select, input[type="password"], input[type="text"], button {
-      padding: 10px;
-      margin: 10px;
-      border-radius: 8px;
-      border: none;
-      font-size: 16px;
-    }
-    button {
-      background-color: #ff3333;
-      color: #fff;
-      cursor: pointer;
-    }
-    #sinais-container {
-      background-color: #111;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 0 12px #ff3333;
-      max-width: 400px;
-      margin: 20px auto;
-    }
-    #vip-area {
-      margin-top: 30px;
-    }
-    footer {
-      margin-top: 50px;
-      color: #666;
-      font-size: 14px;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WillBoot - Login VIP</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <div class="container">
+    <h1>🔐 WillBoot VIP</h1>
+    <p>Entre com sua conta VIP para acessar os sinais</p>
+    <input type="text" id="usuario" placeholder="Usuário VIP" />
+    <input type="password" id="senha" placeholder="Senha VIP" />
+    <button onclick="login()">Entrar</button>
+    <p id="mensagem"></p>
+  </div>
 
-  <header>
-    <h1>WillBoot</h1>
-    <p>O seu robô de sinais Aviator confiável!</p>
-  </header>
-
-  <main>
-    <section>
-      <label for="plataforma">Escolha a casa de apostas:</label>
-      <select id="plataforma" onchange="trocarPlataforma()">
-        <option value="ElephantBet">ElephantBet</option>
-        <option value="Betano">Betano</option>
-        <option value="Betway">Betway</option>
-      </select>
-    </section>
-
-    <section id="sinais">
-      <h2>Sinais ao Vivo</h2>
-      <div id="sinais-container">
-        <p>Carregando sinais...</p>
-      </div>
-    </section>
-
-    <section id="vip-area">
-      <h3>Área VIP</h3>
-      <input type="text" id="usuario" placeholder="Usuário VIP">
-      <input type="password" id="senha" placeholder="Senha VIP">
-      <button onclick="entrarVIP()">Entrar</button>
-      <p id="vip-status"></p>
-    </section>
-  </main>
-
-  <footer>
-    <p>&copy; 2025 WillBoot. Todos os direitos reservados.</p>
-  </footer>
-
-  <audio id="alerta-audio" src="sinal-novo.mp3" preload="auto"></audio>
-  <script>
-    const sinaisContainer = document.getElementById('sinais-container');
-    const alertaAudio = document.getElementById('alerta-audio');
-    const usuarioCerto = 'willboot';
-    const senhaCerta = 'willboot2025';
-
-    function trocarPlataforma() {
-      const plataforma = document.getElementById('plataforma').value;
-      buscarSinal(plataforma);
-    }
-
-    function buscarSinal(plataforma) {
-      sinaisContainer.innerHTML = `<p>Buscando sinal para ${plataforma}...</p>`;
-
-      fetch('https://willboot-backend.onrender.com/get_sinal', {
-        headers: {
-          'Authorization': 'Basic ' + btoa(usuarioCerto + ':' + senhaCerta)
-        }
-      })
-      .then(res => res.json())
-      .then(data => {
-        sinaisContainer.innerHTML = `
-          <p><strong>🎯 Sinal ${plataforma}:</strong> ${data.sinal}</p>
-          <p><strong>🔥 Confiança:</strong> ${data.confianca}</p>
-        `;
-        alertaAudio.play();
-      })
-      .catch(err => {
-        sinaisContainer.innerHTML = `<p style="color: red;">Erro ao buscar sinal.</p>`;
-      });
-    }
-
-    function entrarVIP() {
-      const usuario = document.getElementById('usuario').value;
-      const senha = document.getElementById('senha').value;
-
-      if (usuario === usuarioCerto && senha === senhaCerta) {
-        document.getElementById('vip-status').innerText = '✅ Acesso VIP liberado!';
-        trocarPlataforma();
-      } else {
-        document.getElementById('vip-status').innerText = '❌ Usuário ou senha incorretos.';
-      }
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      trocarPlataforma(); // Carrega sinal inicial
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
-  </html>
+</html>
