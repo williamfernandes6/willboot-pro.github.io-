@@ -1,6 +1,13 @@
 const API_URL = "https://willbootpro-backend.onrender.com";
 let ultimoSinal = "";
 let tempoRestante = 10;
+const historico = [];
+const dicas = [
+  "🎯 Tendência de vela alta nas próximas rodadas.",
+  "⚠️ Três rodadas abaixo de 1.50x — cuidado!",
+  "🔥 Padrão de subida detectado!",
+  "💡 Use entrada segura após 2 rodadas baixas."
+];
 
 function atualizarContador() {
   const contador = document.getElementById("contador");
@@ -10,6 +17,18 @@ function atualizarContador() {
 }
 setInterval(atualizarContador, 1000);
 
+function mostrarDica() {
+  const dica = dicas[Math.floor(Math.random() * dicas.length)];
+  document.getElementById("dica-ia").innerText = dica;
+}
+
+function atualizarHistorico(novo) {
+  historico.unshift(novo);
+  if (historico.length > 10) historico.pop();
+  document.getElementById("historico-sinais").innerHTML = historico.map((s, i) =>
+    `<div style="opacity:${1 - i * 0.1};">${s}</div>`).join("");
+}
+
 async function buscarSinal() {
   const casa = document.getElementById("casa-aposta").value;
   try {
@@ -18,13 +37,13 @@ async function buscarSinal() {
     if (data.sinal && data.sinal !== ultimoSinal) {
       ultimoSinal = data.sinal;
       let classeVela = "";
-
       if (data.tipo.includes("🔥")) classeVela = "vela-muito-alta";
       else if (data.tipo.includes("🔴")) classeVela = "vela-alta";
       else if (data.tipo.includes("🟡")) classeVela = "vela-2x";
       else classeVela = "vela-fraca";
 
-      document.getElementById("painel-sinais").innerHTML = `
+      const painel = document.getElementById("painel-sinais");
+      painel.innerHTML = `
         <div class="${classeVela}">
           <strong>${data.sinal}</strong><br>
           Tipo: ${data.tipo}<br>
@@ -32,7 +51,17 @@ async function buscarSinal() {
           Hora: ${data.hora}
         </div>
       `;
+      painel.classList.add("vibrar");
+      setTimeout(() => painel.classList.remove("vibrar"), 300);
+
+      const barra = document.getElementById("barra");
+      barra.style.width = `${data.confianca}%`;
+      barra.style.background = data.confianca >= 80 ? "#0f0" :
+                               data.confianca >= 60 ? "#ff0" : "#f00";
+
       document.getElementById("alerta").play();
+      atualizarHistorico(`${data.sinal} - ${data.tipo}`);
+      mostrarDica();
       tempoRestante = 10;
     }
   } catch {
@@ -55,4 +84,4 @@ async function loginVIP() {
   } catch {
     document.getElementById("vip-status").innerText = "Erro no login.";
   }
-}
+  }
