@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>WillBoot - Sinais Aviator</title>
+  <link href="style.css" rel="stylesheet" />
+</head>
+<body>
+  <header>
+    <h1>WillBoot</h1>
+    <p>O seu robô de sinais Aviator confiável!</p>
+  </header>
+
+  <main>
+    <section id="plataformas">
+      <label for="plataforma">Escolha a casa de apostas:</label>
+      <select id="plataforma" onchange="trocarPlataforma()">
+        <option value="elephantbet">ElephantBet</option>
+        <option value="betano">Betano</option>
+        <option value="betway">Betway</option>
+      </select>
+    </section>
+
+    <section id="sinais">
+      <h2>Sinais ao Vivo</h2>
+      <div id="sinais-container">
+        <p>Carregando sinais...</p>
+      </div>
+    </section>
+
+    <section id="vip">
+      <h3>Acesso VIP</h3>
+      <p><a href="login.html">Entrar na área VIP</a></p>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 WillBoot. Todos os direitos reservados.</p>
+  </footer>
+
+  <audio id="alerta-audio" src="sinal-novo.mp3" preload="auto"></audio>
+  <script src="script.js"></script>
+</body>
+    </html>
