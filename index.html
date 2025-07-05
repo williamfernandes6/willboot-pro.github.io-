@@ -2,20 +2,57 @@
 <html lang="pt">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WillBoot - Login VIP</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>WillBoot - Sinais Aviator</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    h1 {
+      color: #e00000;
+    }
+    .box {
+      background: #111;
+      padding: 20px;
+      margin-top: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 10px red;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1>🔐 WillBoot VIP</h1>
-    <p>Entre com sua conta VIP para acessar os sinais</p>
-    <input type="text" id="usuario" placeholder="Usuário VIP" />
-    <input type="password" id="senha" placeholder="Senha VIP" />
-    <button onclick="login()">Entrar</button>
-    <p id="mensagem"></p>
+  <h1>WillBoot</h1>
+  <p>O seu robô de sinais Aviator confiável!</p>
+
+  <div class="box">
+    <h2>Sinal Atual</h2>
+    <p id="sinal">Carregando...</p>
+    <p id="hora"></p>
+    <p id="base"></p>
   </div>
 
-  <script src="script.js"></script>
+  <footer style="margin-top: 50px;">
+    <p>© 2025 WillBoot. Todos os direitos reservados.</p>
+  </footer>
+
+  <script>
+    async function buscarSinal() {
+      try {
+        const resp = await fetch('https://willboot-backend.onrender.com/sinal');
+        const dados = await resp.json();
+
+        document.getElementById('sinal').innerText = dados.sinal;
+        document.getElementById('hora').innerText = "⏰ " + dados.hora;
+        document.getElementById('base').innerText = "📊 Últimos voos: " + dados.base.join(", ");
+      } catch (e) {
+        document.getElementById('sinal').innerText = 'Erro ao buscar sinal.';
+      }
+    }
+    window.onload = buscarSinal;
+  </script>
 </body>
 </html>
