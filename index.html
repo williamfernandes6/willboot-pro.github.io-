@@ -1,123 +1,47 @@
-DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WillBoot - Sinais Aviator Angola</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="favicon.ico">
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Arial', sans-serif;
-      background-color: #111;
-      color: #fff;
-    }
-
-    header {
-      background-color: #1a1a1a;
-      padding: 20px;
-      text-align: center;
-      border-bottom: 2px solid red;
-    }
-
-    header h1 {
-      color: red;
-      margin: 0;
-    }
-
-    .frase-impactante {
-      font-size: 1.2rem;
-      margin-top: 10px;
-      color: #aaa;
-    }
-
-    .container {
-      padding: 20px;
-      text-align: center;
-    }
-
-    select, button {
-      padding: 10px;
-      margin: 10px 0;
-      border: none;
-      border-radius: 5px;
-      font-size: 1rem;
-    }
-
-    select {
-      background-color: #222;
-      color: #fff;
-      border: 1px solid #555;
-    }
-
-    button {
-      background-color: red;
-      color: white;
-      cursor: pointer;
-    }
-
-    .sinais {
-      margin-top: 30px;
-    }
-
-    .sinal {
-      background: #222;
-      border-left: 5px solid red;
-      margin: 10px auto;
-      padding: 15px;
-      max-width: 500px;
-      border-radius: 8px;
-      box-shadow: 0 0 5px #000;
-    }
-
-    .sinal span {
-      font-weight: bold;
-      color: #0f0;
-    }
-
-    footer {
-      margin-top: 40px;
-      text-align: center;
-      padding: 10px;
-      font-size: 0.9rem;
-      color: #888;
-    }
-
-    .vip {
-      margin-top: 30px;
-    }
-
-    audio {
-      display: none;
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>WillBoot Pro - IA Aviator</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header>
-    <h1>WillBoot</h1>
-    <div class="frase-impactante">O seu robô de sinais Aviator confiável em Angola!</div>
+    <img src="logo.png" alt="Logo WillBoot" class="logo"/>
+    <h1>WillBoot Pro</h1>
+    <p>O seu robô de sinais Aviator confiável!</p>
   </header>
 
-  <div class="container">
-    <label for="casa">Escolha a casa de apostas:</label><br>
-    <select id="casa">
+  <section class="menu">
+    <label>Escolha a casa de apostas:</label>
+    <select id="casa-aposta">
       <option>ElephantBet</option>
       <option>Betano</option>
       <option>Betway</option>
+      <option>PremierBet</option>
     </select>
+  </section>
 
-    <div class="sinais" id="sinais">
-      <p>Carregando sinais ao vivo...</p>
-    </div>
+  <section id="sinais">
+    <h2>Sinais ao Vivo</h2>
+    <div id="contador"></div>
+    <div id="painel-sinais">Carregando sinais...</div>
+  </section>
 
-    <div class="vip">
-      <button onclick="entrarVIP()">Acesso VIP</button>
-    </div>
-  </div>
-
-  <audio id="sinalAudio" src="sinal-novo.mp3"></audio>
+  <section id="vip">
+    <h2>Acesso VIP</h2>
+    <input type="text" id="user" placeholder="Usuário">
+    <input type="password" id="pass" placeholder="Senha">
+    <button onclick="loginVIP()">Entrar na área VIP</button>
+    <p id="vip-status"></p>
+  </section>
 
   <footer>
-    © 2025 WillBoot. Todos os direitos reservados.
+    <p>&copy; 2025 WillBoot. Todos os direitos reservados.</p>
   </footer>
+
+  <audio id="alerta" src="alerta.mp3" preload="auto"></audio>
+  <script src="script.js"></script>
+</body>
+</html>
