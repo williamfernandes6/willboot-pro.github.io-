@@ -1,51 +1,58 @@
-const usuarioCerto = 'willboot';
-const senhaCerta = 'willboot2025';
+const API_URL = "https://willbootpro-backend.onrender.com";
+let ultimoSinal = "";
+let tempoRestante = 10;
 
-function login() {
-  const u = document.getElementById('usuario').value;
-  const s = document.getElementById('senha').value;
-
-  if (u === usuarioCerto && s === senhaCerta) {
-    localStorage.setItem('logado', 'sim');
-    window.location.href = 'painel.html';
-  } else {
-    document.getElementById('mensagem').innerText = '❌ Usuário ou senha incorretos.';
-  }
+function atualizarContador() {
+  const contador = document.getElementById("contador");
+  contador.innerText = `⏱️ Próximo sinal em: ${tempoRestante}s`;
+  tempoRestante--;
+  if (tempoRestante < 0) tempoRestante = 10;
 }
+setInterval(atualizarContador, 1000);
 
-function verificarLogin() {
-  const logado = localStorage.getItem('logado');
-  if (logado !== 'sim') {
-    window.location.href = 'index.html';
-  }
-}
+async function buscarSinal() {
+  const casa = document.getElementById("casa-aposta").value;
+  try {
+    const res = await fetch(`${API_URL}/sinais?casa=${casa}`);
+    const data = await res.json();
+    if (data.sinal && data.sinal !== ultimoSinal) {
+      ultimoSinal = data.sinal;
+      let classeVela = "";
 
-function buscarSinal() {
-  verificarLogin();
-  const plataforma = document.getElementById('plataforma').value;
-  const sinais = document.getElementById('sinais');
+      if (data.tipo.includes("🔥")) classeVela = "vela-muito-alta";
+      else if (data.tipo.includes("🔴")) classeVela = "vela-alta";
+      else if (data.tipo.includes("🟡")) classeVela = "vela-2x";
+      else classeVela = "vela-fraca";
 
-  sinais.innerHTML = `<p>Buscando sinal para ${plataforma}...</p>`;
-
-  fetch('https://willboot-backend.onrender.com/sinal', {
-    headers: {
-      'Authorization': 'Basic ' + btoa('willboot:willboot2025')
+      document.getElementById("painel-sinais").innerHTML = `
+        <div class="${classeVela}">
+          <strong>${data.sinal}</strong><br>
+          Tipo: ${data.tipo}<br>
+          Confiança: ${data.confianca}%<br>
+          Hora: ${data.hora}
+        </div>
+      `;
+      document.getElementById("alerta").play();
+      tempoRestante = 10;
     }
-  })
-  .then(res => res.json())
-  .then(data => {
-    sinais.innerHTML = `
-      <p><strong>🎯 Sinal ${plataforma}:</strong> ${data.sinal}</p>
-      <p><strong>🔥 Confiança:</strong> ${data.confianca}</p>
-    `;
-    document.getElementById('alerta').play();
-  })
-  .catch(() => {
-    sinais.innerHTML = '<p style="color:red;">Erro ao buscar sinal.</p>';
-  });
+  } catch {
+    document.getElementById("painel-sinais").innerText = "Erro ao buscar sinal.";
+  }
 }
+setInterval(buscarSinal, 5000);
 
-function voltar() {
-  localStorage.removeItem('logado');
-  window.location.href = 'index.html';
+async function loginVIP() {
+  const user = document.getElementById("user").value;
+  const pass = document.getElementById("pass").value;
+  try {
+    const res = await fetch(`${API_URL}/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ user, pass })
+    });
+    const data = await res.json();
+    document.getElementById("vip-status").innerText = data.status;
+  } catch {
+    document.getElementById("vip-status").innerText = "Erro no login.";
+  }
 }
