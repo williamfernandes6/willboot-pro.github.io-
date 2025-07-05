@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>WillBoot Pro - IA Aviator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <img src="logo.png" alt="Logo WillBoot" class="logo"/>
+    <h1>WillBoot Pro</h1>
+    <p>O seu robô de sinais Aviator confiável!</p>
+  </header>
+
+  <section class="menu">
+    <label>Escolha a casa de apostas:</label>
+    <select id="casa-aposta">
+      <option>ElephantBet</option>
+      <option>Betano</option>
+      <option>Betway</option>
+      <option>PremierBet</option>
+    </select>
+  </section>
+
+  <section id="sinais">
+    <h2>Sinais ao Vivo</h2>
+    <div id="contador">⏱️ Próximo sinal em: 5s</div>
+    <div id="painel-sinais">Carregando sinais...</div>
+    <div id="barra-confianca"><div id="barra"></div></div>
+    <div id="dica-ia"></div>
+    <div id="historico-sinais"></div>
+  </section>
+
+  <section id="vip">
+    <h2>Acesso VIP</h2>
+    <input type="text" id="user" placeholder="Usuário">
+    <input type="password" id="pass" placeholder="Senha">
+    <button onclick="loginVIP()">Entrar na área VIP</button>
+    <p id="vip-status"></p>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 WillBoot. Todos os direitos reservados.</p>
+  </footer>
+
+  <audio id="alerta" src="alerta.mp3" preload="auto"></audio>
+  <script src="script.js"></script>
+</body>
+</html>
