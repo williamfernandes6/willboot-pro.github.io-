@@ -1,34 +1,51 @@
-function trocarPlataforma() {
+const usuarioCerto = 'willboot';
+const senhaCerta = 'willboot2025';
+
+function login() {
+  const u = document.getElementById('usuario').value;
+  const s = document.getElementById('senha').value;
+
+  if (u === usuarioCerto && s === senhaCerta) {
+    localStorage.setItem('logado', 'sim');
+    window.location.href = 'painel.html';
+  } else {
+    document.getElementById('mensagem').innerText = '❌ Usuário ou senha incorretos.';
+  }
+}
+
+function verificarLogin() {
+  const logado = localStorage.getItem('logado');
+  if (logado !== 'sim') {
+    window.location.href = 'index.html';
+  }
+}
+
+function buscarSinal() {
+  verificarLogin();
   const plataforma = document.getElementById('plataforma').value;
-  carregarSinais(plataforma);
+  const sinais = document.getElementById('sinais');
+
+  sinais.innerHTML = `<p>Buscando sinal para ${plataforma}...</p>`;
+
+  fetch('https://willboot-backend.onrender.com/get_sinal', {
+    headers: {
+      'Authorization': 'Basic ' + btoa('willboot:willboot2025')
+    }
+  })
+  .then(res => res.json())
+  .then(data => {
+    sinais.innerHTML = `
+      <p><strong>🎯 Sinal ${plataforma}:</strong> ${data.sinal}</p>
+      <p><strong>🔥 Confiança:</strong> ${data.confianca}</p>
+    `;
+    document.getElementById('alerta').play();
+  })
+  .catch(() => {
+    sinais.innerHTML = '<p style="color:red;">Erro ao buscar sinal.</p>';
+  });
 }
 
-function carregarSinais(plataforma) {
-  const sinaisContainer = document.getElementById('sinais-container');
-  sinaisContainer.innerHTML = "Carregando sinais...";
-
-  fetch(`https://willboot-ai.onrender.com/sinal/${plataforma}`)
-    .then(res => res.json())
-    .then(data => {
-      const usuarioVIP = localStorage.getItem("vip") === "sim";
-      sinaisContainer.innerHTML = `
-        <p><strong>Plataforma:</strong> ${data.plataforma}</p>
-        <p><strong>Horário do sinal:</strong> ${data.hora}</p>
-        <p><strong>Nível de confiança:</strong> ${usuarioVIP ? "99%" : data.confianca}</p>
-        <p><strong>Estrategia:</strong> ${data.estrategia}</p>
-      `;
-      tocarAlerta();
-    })
-    .catch(err => {
-      sinaisContainer.innerHTML = "<p>Erro ao buscar sinal. Tente novamente.</p>";
-    });
+function voltar() {
+  localStorage.removeItem('logado');
+  window.location.href = 'index.html';
 }
-
-function tocarAlerta() {
-  const audio = document.getElementById('alerta-audio');
-  if (audio) audio.play();
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  carregarSinais("elephantbet");
-});
