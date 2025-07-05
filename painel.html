@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WillBoot - Painel de Sinais</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>📡 WillBoot Sinais</h1>
+    <label for="plataforma">Escolha a casa de apostas:</label>
+    <select id="plataforma" onchange="buscarSinal()">
+      <option value="ElephantBet">ElephantBet</option>
+      <option value="Betano">Betano</option>
+      <option value="Betway">Betway</option>
+    </select>
+
+    <div id="sinais">
+      <p>Carregando sinais...</p>
+    </div>
+
+    <button onclick="voltar()">Sair</button>
+  </div>
+
+  <audio id="alerta" src="sinal-novo.mp3" preload="auto"></audio>
+  <script src="script.js"></script>
+</body>
+</html>
