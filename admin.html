@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Painel Admin - WillBoot PRO</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Painel do Proprietário</h1>
+    <p>Aqui você gerencia acessos VIP e confirma pagamentos.</p>
+  </header>
+  <main style="padding: 20px;">
+    <h3>Confirmação manual de acesso VIP</h3>
+    <p>Digite o e-mail do cliente que confirmou pagamento:</p>
+    <input type="email" id="email" placeholder="cliente@email.com">
+    <br><br>
+    <select id="plano">
+      <option value="diario">Plano Diário</option>
+      <option value="semanal">Plano Semanal</option>
+      <option value="mensal">Plano Mensal</option>
+    </select>
+    <br><br>
+    <button onclick="confirmarVip()">Confirmar VIP</button>
+    <p id="resposta" style="margin-top: 20px;"></p>
+  </main>
+  <script>
+    async function confirmarVip() {
+      const email = document.getElementById('email').value;
+      const plano = document.getElementById('plano').value;
+      const resposta = await fetch('https://willboot-backend.william.repl.co/confirmar-vip', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, plano, senha_admin: "admin123" })
+      });
+      const resultado = await resposta.json();
+      document.getElementById("resposta").innerText = resultado.mensagem || "Erro ao confirmar";
+    }
+  </script>
+</body>
+</html>
