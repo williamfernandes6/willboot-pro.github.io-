@@ -33,3 +33,39 @@ h1 { margin: 0; color: red; }
 .vip-planos { display: flex; justify-content: center; flex-wrap: wrap; padding: 20px; gap: 20px; }
 .plano { background: #222; padding: 20px; border-radius: 12px; width: 250px; box-shadow: 0 0 10px red; }
 button { padding: 10px 15px; background: red; color: white; border: none; border-radius: 6px; cursor: pointer; }
+.hero {
+  text-align: center;
+  padding: 100px 20px;
+  background: linear-gradient(135deg, #0d0d0d, #1a0000);
+  color: white;
+}
+
+.hero h1 {
+  font-size: 48px;
+  color: #ff0000;
+  margin-bottom: 20px;
+  text-shadow: 0 0 10px red;
+}
+
+.hero p {
+  font-size: 22px;
+  color: #cccccc;
+  margin-bottom: 40px;
+}
+
+.hero button {
+  font-size: 22px;
+  padding: 15px 30px;
+  border: none;
+  background: #ff0000;
+  color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px #ff0000;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.hero button:hover {
+  background: #ff3333;
+  transform: scale(1.05);
+    }
