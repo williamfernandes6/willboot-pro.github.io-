@@ -1,4 +1,31 @@
+.plano-vip {
+  border: 2px solid red;
+  border-radius: 20px;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 400px;
+  background: #1a1a1a;
+  box-shadow: 0 0 10px rgba(255,0,0,0.4);
+  color: white;
+  font-size: 22px;
+  text-align: center;
+}
 
+.plano-vip h2 {
+  color: #ff3c3c;
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+
+.plano-vip p {
+  font-size: 20px;
+  color: #ccc;
+}
+
+.plano-vip strong {
+  font-size: 24px;
+  color: #00ff88;
+}
 body { background: #111; color: white; font-family: Arial; text-align: center; margin: 0; }
 header { background: #222; padding: 20px; }
 h1 { margin: 0; color: red; }
